@@ -1,8 +1,8 @@
 # OpenGL Learning Track
 
-<center>
+<p align="center">
     <img src="https://raw.githubusercontent.com/soumik12345/geekyrakshit-blog/master/images/opengl-logs/logo.png">
-</center>
+</p>
 
 My journey of learning OpenGL, Game Development and 3D Programming.
 
