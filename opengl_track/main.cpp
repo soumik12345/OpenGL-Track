@@ -3,6 +3,11 @@
 using namespace std;
 
 
+void resize_callback(GLFWwindow* window, int fbW, int fbH) {
+	glViewport(0, 0, fbW, fbH);
+}
+
+
 int main() {
 
 	/////////////////////
@@ -25,7 +30,7 @@ int main() {
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 4);
-	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
+	glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
 	// Create the Window
@@ -34,15 +39,19 @@ int main() {
 		"OpenGL Track", NULL, NULL
 	);
 
-	// Prepare Framebuffer
-	glfwGetFramebufferSize(
-		window,
-		&frameBufferWidth,
-		&frameBufferHeight
-	);
+	// Resizable Window
+	glfwSetFramebufferSizeCallback(window, resize_callback);
 
-	// Prepare Viewport
-	glViewport(0, 0, frameBufferWidth, frameBufferHeight);
+	// Uncomment this, if the window is not resizable
+	//// Prepare Framebuffer
+	//glfwGetFramebufferSize(
+	//	window,
+	//	&frameBufferWidth,
+	//	&frameBufferHeight
+	//);
+
+	//// Prepare Viewport
+	//glViewport(0, 0, frameBufferWidth, frameBufferHeight);
 
 	glfwMakeContextCurrent(window);
 
