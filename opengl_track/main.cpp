@@ -8,11 +8,11 @@ void resize_callback(GLFWwindow* window, int fbW, int fbH) {
 }
 
 
-bool loadShaders(GLuint &program) {
-	
+bool loadShaders(GLuint& program) {
+
 	char infoLog[512]; // Log of info if the shader linking fails
 	GLint success;
-	
+
 	// Vertex Shader {
 	string vertex_shader_source = read_file("core.vert");
 	GLuint vertex_shader = glCreateShader(GL_VERTEX_SHADER);
@@ -174,7 +174,11 @@ int main() {
 	/////////
 	// End //
 	/////////
+
+	glfwDestroyWindow(window);
 	glfwTerminate();
+
+	glDeleteProgram(core_program);
 
 	return 0;
 }
