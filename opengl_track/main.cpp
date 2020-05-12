@@ -72,6 +72,13 @@ bool loadShaders(GLuint& program) {
 }
 
 
+void update_input(GLFWwindow* window) {
+	if (glfwGetKey(window,GLFW_KEY_ESCAPE) == GLFW_PRESS) {
+		glfwSetWindowShouldClose(window, GLFW_TRUE);
+	}
+}
+
+
 int main() {
 
 	/////////////////////
@@ -155,7 +162,7 @@ int main() {
 		// }
 
 		// Update {
-		//
+		update_input(window);
 		// }
 
 		// Draw {
