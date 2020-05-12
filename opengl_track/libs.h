@@ -2,7 +2,12 @@
 
 #include<iostream>
 
+#include<fstream>
+#include<string>
+#include<vector>
+
 #include<glew.h>
+
 #include<glfw3.h>
 
 #include<glm.hpp>
@@ -16,3 +21,8 @@
 #include<gtc/type_ptr.hpp>
 
 #include<SOIL2.h>
+
+using namespace std;
+
+
+string read_file(string);
