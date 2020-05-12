@@ -26,3 +26,5 @@ using namespace std;
 
 
 string read_file(string);
+void window_settings();
+void opengl_settings();
