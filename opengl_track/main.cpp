@@ -1,6 +1,24 @@
 #include "libs.h"
 
 using namespace std;
+using namespace glm;
+
+
+Vertex vertices[] =
+{
+	//Position							//Color						//Texcoords
+	vec3(-0.5f, 0.5f, 0.f),				vec3(1.f, 0.f, 0.f),		vec2(0.f, 1.f),
+	vec3(-0.5f, -0.5f, 0.f),			vec3(0.f, 1.f, 0.f),		vec2(0.f, 0.f),
+	vec3(0.5f, -0.5f, 0.f),				vec3(0.f, 0.f, 1.f),		vec2(1.f, 0.f),
+	vec3(0.5f, 0.5f, 0.f),				vec3(1.f, 1.f, 0.f),		vec2(1.f, 1.f)
+};
+unsigned nrOfVertices = sizeof(vertices) / sizeof(Vertex);
+
+GLuint indices[] =
+{
+	0, 1, 2
+};
+unsigned nrOfIndices = sizeof(indices) / sizeof(GLuint);
 
 
 void resize_callback(GLFWwindow* window, int fbW, int fbH) {
@@ -149,8 +167,69 @@ int main() {
 		glfwTerminate();
 	// }
 
+	////////////////
+	// Model Init //
+	////////////////
 
 
+	/////////////
+	// Buffers //
+	/////////////
+	
+	// Vertex Arrau Object {
+	GLuint VAO;
+	glCreateVertexArrays(1, &VAO);
+	glBindVertexArray(VAO);
+	// }
+
+	// Vertex Buffer Object {
+	GLuint VBO;
+	glGenBuffers(1, &VBO);
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+	// }
+
+	// Element Buffer Object {
+	GLuint EBO;
+	glGenBuffers(1, &EBO);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+	// }
+
+	
+	////////////////////
+	// Input Assembly //
+	////////////////////
+
+	// vertex_position {
+	GLuint attribute_location = glGetAttribLocation(core_program, "vertex_position");
+	glVertexAttribPointer(
+		attribute_location, 3, GL_FLOAT, GL_FALSE,
+		sizeof(Vertex), (GLvoid*)offsetof(Vertex, position)
+	);
+	glEnableVertexAttribArray(attribute_location);
+	// }
+
+	// vertex_color {
+	attribute_location = glGetAttribLocation(core_program, "vertex_color");
+	glVertexAttribPointer(
+		attribute_location, 3, GL_FLOAT, GL_FALSE,
+		sizeof(Vertex), (GLvoid*)offsetof(Vertex, color)
+	);
+	glEnableVertexAttribArray(attribute_location);
+	// }
+
+	// vertex_textcoord {
+	attribute_location = glGetAttribLocation(core_program, "vertex_textcoord");
+	glVertexAttribPointer(
+		attribute_location, 2, GL_FLOAT, GL_FALSE,
+		sizeof(Vertex), (GLvoid*)offsetof(Vertex, texture_coordinate)
+	);
+	glEnableVertexAttribArray(attribute_location);
+	// }
+
+	glBindVertexArray(0);
+	
 	///////////////
 	// Main Loop //
 	///////////////
@@ -170,8 +249,12 @@ int main() {
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Clear the canvas with a color
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL); // Clear Buffers
 		//	}
+		// use shader {
+		glUseProgram(core_program);
+		glBindVertexArray(VAO);
+		// }
 		//	draw on canvas {
-		//		Nothing as of Now
+		glDrawElements(GL_TRIANGLES, nrOfIndices, GL_UNSIGNED_INT, 0);
 		//	}
 		//	end draw {
 		glfwSwapBuffers(window);

@@ -23,8 +23,16 @@
 #include<SOIL2.h>
 
 using namespace std;
+using namespace glm;
 
 
 string read_file(string);
 void window_settings();
 void opengl_settings();
+
+
+struct Vertex {
+	vec3 position;
+	vec3 color;
+	vec2 texture_coordinate;
+};
